@@ -12,18 +12,22 @@ return new class extends Migration
      */
     public function up(): void
     {
+       
         DB::unprepared('
-            CREATE PROCEDURE ReadUsers(
+        CREATE PROCEDURE ReadUsers(
             IN givLIMIT int, 
             IN givOFFSET int)
             BEGIN
-                SELECT * FROM users LIMIT givLIMIT OFFSET givOFFSET;
-            END
-        ');
+                SELECT USR.name as Username, ROL.name as RoleName, USR.created_at FROM users as USR
+                inner join roles AS ROL
+                on USR.id = ROL.user_id
+                LIMIT givLIMIT OFFSET givOFFSET;
+                END
+                ');
     }
 
     public function down(): void
     {
-        DB::unprepared('DROP PROCEDURE IF EXISTS ReadUsers()');
+        DB::unprepared('DROP PROCEDURE IF EXISTS ReadUsers');
     }
 };
