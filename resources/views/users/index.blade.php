@@ -8,6 +8,15 @@
         </h2>
     </x-slot>
 
+    
+    @if (session('success'))
+
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative w-3/4 m-auto text-center my-6" role="alert">
+        <h3 class="block sm:inline">{{ session('success') }}</h3>
+       
+    </div>
+    @endif
+
     <div class="overflow-x-auto">
         <table class="w-3/4 bg-white dark:bg-gray-800 m-auto mt-5 mb-5">
             <thead>

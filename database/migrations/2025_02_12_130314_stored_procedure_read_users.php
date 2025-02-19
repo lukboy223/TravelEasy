@@ -12,8 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-       
+
         DB::unprepared('
+        DROP PROCEDURE IF EXISTS ReadUsers;
         CREATE PROCEDURE ReadUsers(
             IN givLIMIT int, 
             IN givOFFSET int)
