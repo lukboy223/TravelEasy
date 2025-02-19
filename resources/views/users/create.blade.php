@@ -82,7 +82,6 @@
             <button type="submit"
                 class="bg-green-700 text-white p-2 rounded hover:bg-green-800 dark:hover:bg-green-900">Opslaan</button>
         </form>
-        <?php var_dump($errors); ?>
 
         <div class="w-full justify-center flex my-6">
             {{-- button to create a new user --}}
