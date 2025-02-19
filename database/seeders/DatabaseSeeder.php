@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Departure;
+use App\Models\Destination;
+use App\Models\Employee;
+use App\Models\Trip;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,5 +23,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        Trip::factory(200)->create();
+        Departure::factory(200)->create();
+        Destination::factory(200)->create();
+        Employee::factory(200)->create();
     }
 }
