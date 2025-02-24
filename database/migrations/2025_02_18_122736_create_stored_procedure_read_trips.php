@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
+        DROP PROCEDURE IF EXISTS ReadTrips;
             CREATE PROCEDURE ReadTrips(
                 IN givLIMIT INT, 
                 IN givOFFSET INT

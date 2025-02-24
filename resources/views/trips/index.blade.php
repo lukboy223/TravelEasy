@@ -26,7 +26,7 @@
                 <tbody>
                     @if($trips->isEmpty())
                         <tr>
-                            <td class="px-4 py-2 border border-gray-300 text-center bg-blue-100 align-middle h-16" colspan="8">Geen reizen gevonden, probeer het later opnieuwe</td>
+                            <td class="px-4 py-2 border border-gray-300 text-center bg-blue-100 align-middle h-16" colspan="8">Geen data gevonden, probeer het later opnieuwe</td>
                         </tr>
                     @else
                     @foreach($trips as $trip)
