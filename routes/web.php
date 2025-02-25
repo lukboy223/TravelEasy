@@ -2,10 +2,18 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TripController;
+use App\Http\Controllers\InvoiceController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Trip routes
+Route::get('/trips', [TripController::class, 'index'])->name('trips.index');
+
+// Invoice routes
+Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -11,17 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("CustomerId");
-            $table->unsignedBigInteger("TripId");
-            $table->string("SeatNumber");
-            $table->date("PurchaseDate");
-            $table->time("PurchaseTime");
-            $table->string("BookingStatus");
-            $table->decimal("Price", 8, 2);
-            $table->integer("Number");
-            $table->text("SpecialRequests");
+            $table->unsignedBigInteger("PersonId");
+            $table->string("ContactNumber");
             $table->boolean("IsActive")->default(true);
             $table->text('Note')->nullable(); // Eventuele opmerkingen, kan leeg zijn
             $table->timestamps();
@@ -33,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('customers');
     }
 };

@@ -6,22 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // Medewerkers
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("CustomerId");
-            $table->unsignedBigInteger("TripId");
-            $table->string("SeatNumber");
-            $table->date("PurchaseDate");
-            $table->time("PurchaseTime");
-            $table->string("BookingStatus");
-            $table->decimal("Price", 8, 2);
+            $table->unsignedBigInteger("PersonId");
             $table->integer("Number");
-            $table->text("SpecialRequests");
+            $table->string("EmployeeType"); // Manager, Administrator and DiskEmployee
             $table->boolean("IsActive")->default(true);
             $table->text('Note')->nullable(); // Eventuele opmerkingen, kan leeg zijn
             $table->timestamps();
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('employees');
     }
 };
