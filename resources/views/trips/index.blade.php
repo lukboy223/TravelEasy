@@ -13,7 +13,7 @@
         <!-- Tabel met alle reizen -->
         <div class="overflow-x-auto mx-auto max-w-6xl">
             <table class="table-auto w-full bg-white border-collapse border border-gray-200 shadow-md">
-                <thead style="background-color: #5F1A37;" class="text-white">
+                <thead style="background-color: #001f3d;" class="text-white">
                     <tr>
                         <th class="px-4 py-2 border border-gray-300">Vluchtnummer</th>
                         <th class="px-4 py-2 border border-gray-300">Vertrekdatum</th>
@@ -26,7 +26,7 @@
                 <tbody>
                     @if($trips->isEmpty())
                         <tr>
-                            <td class="px-4 py-2 border border-gray-300 text-center bg-blue-100 align-middle h-16" colspan="8">Geen data gevonden, probeer het later opnieuwe</td>
+                            <td class="px-4 py-2 border border-gray-300 text-center bg-blue-100 align-middle h-16" colspan="8">Er is geen data beschikbaar.</td>
                         </tr>
                     @else
                     @foreach($trips as $trip)
@@ -36,8 +36,20 @@
                             <td class="px-4 py-2 border border-gray-300">{{ $trip->DepartureTime }}</td>
                             <td class="px-4 py-2 border border-gray-300">{{ $trip->ArrivalDate }}</td>
                             <td class="px-4 py-2 border border-gray-300">{{ $trip->ArrivalTime }}</td>
-                            <td class="px-4 py-2 border border-gray-300">{{ $trip->TravelStatus }}</td>
-                            </form>
+                            <!-- Dynamische statuskleur hier -->
+                            <td class="px-4 py-2 border border-gray-300 
+                            @if($trip->TravelStatus == 'Aangekomen') 
+                                text-green-600 bg-green-100 
+                            @elseif($trip->TravelStatus == 'Geannuleerd') 
+                                text-red-600 bg-red-100 
+                            @elseif($trip->TravelStatus == 'Onderweg') 
+                                text-blue-600 bg-blue-100
+                            @elseif($trip->TravelStatus == 'Gepland') 
+                                text-orange-600 bg-orange-100 
+                            @else 
+                                text-gray-600 bg-gray-100 
+                            @endif">
+                            {{ $trip->TravelStatus }}
                             </td>
                         </tr>
                     @endforeach
@@ -47,7 +59,8 @@
                 <!-- Knop naar homepage -->
                 <div class="flex justify-end mt-4">
                 <a href="/"
-                class="bg-[#5F1A37] text-white px-6 py-2 rounded font-semibold shadow-md transition">Home pagina</a>
+                    style="background-color: #001f3d;" 
+                    class="text-white px-6 py-2 rounded font-semibold shadow-md transition">Home pagina</a>
             </div>
             <!-- Paginatie Links -->
             <div class="mt-6">
