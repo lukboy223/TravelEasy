@@ -1,7 +1,7 @@
 <x-app-layout>
 <body class="bg-gray-100 text-white-800">
     <div class="container mx-auto py-8">
-        <h1 class="text-bordeaux text-2xl font-bold text-center mb-6">Overzicht Reizen</h1>
+        <h1 class="text-bordeaux text-2xl font-bold text-center mb-6">Reizen overzicht</h1>
 
         <!-- Bericht weergeven als een sessie een 'success'-bericht bevat -->
         @if(session()->has('success'))
