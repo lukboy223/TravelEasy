@@ -2,11 +2,29 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Name -->
+        <!-- Firstname -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <x-input-label for="FirstName" :value="__('Voornaam')" />
+            <x-text-input id="FirstName" class="block mt-1 w-full" type="text" name="FirstName" :value="old('FirstName')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('FirstName')" class="mt-2" />
+        </div>
+        <!-- Infix -->
+        <div>
+            <x-input-label for="Infix" :value="__('Tussenvoegsel')" />
+            <x-text-input id="Infix" class="block mt-1 w-full" type="text" name="Infix" :value="old('Infix')"  autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('Infix')" class="mt-2" />
+        </div>
+        <!-- Lastname -->
+        <div>
+            <x-input-label for="Lastname" :value="__('Achternaam')" />
+            <x-text-input id="Lastname" class="block mt-1 w-full" type="text" name="Lastname" :value="old('Lastname')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('Lastname')" class="mt-2" />
+        </div>
+        <!-- BirthDate -->
+        <div>
+            <x-input-label for="BirthDate" :value="__('Geboorte datum')" />
+            <x-text-input id="BirthDate" class="block mt-1 w-full" type="datum" name="BirthDate" :value="old('BirthDate')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('BirthDate')" class="mt-2" />
         </div>
 
         <!-- Email Address -->

@@ -25,7 +25,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'person_id' => static::factoryForModel(Person::class),
+            'People_Id' => static::factoryForModel(Person::class),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
