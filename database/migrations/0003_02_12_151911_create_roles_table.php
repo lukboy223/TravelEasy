@@ -24,7 +24,7 @@ return new class extends Migration
     ,Created_at datetime(6) not null default now(6)
     ,Updated_at datetime(6) not null default now(6)
     ,Primary Key (id)
-    ,Foreign Key (User_id) references Users(id)
+   
     )engine=innoDB;
     ');
     }

@@ -33,7 +33,7 @@ return new class extends Migration
 
             SET PersonId = LAST_INSERT_ID();
 
-            INSERT INTO users (Person_Id, Email, Name, Password, created_at)
+            INSERT INTO users (People_Id, Email, Name, Password, created_at)
             VALUES (PersonId, givEmail, givUsername, givPassword, now(6));
 
             SET UserId = LAST_INSERT_ID();

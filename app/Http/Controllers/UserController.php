@@ -7,6 +7,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 // use Illuminate\Validation\Rules\Password;
@@ -75,10 +76,11 @@ class UserController extends Controller
         }else{
             $Infix = $request->Infix;
         }
+        $password = Hash::make($request->Password);
 
         //try catch to create the user
         try {
-            DB::select('call CreateUser(?, ?, ?, ?, ?, ?, ?, ?)', [$request->FirstName, $Infix, $request->LastName, $request->BirthDate, $request->Email, $request->Username, $request->Password, $request->Role]);
+            DB::select('call CreateUser(?, ?, ?, ?, ?, ?, ?, ?)', [$request->FirstName, $Infix, $request->LastName, $request->BirthDate, $request->Email, $request->Username, $password, $request->Role]);
         } catch (\Exception $e) {
             //logs the error in the log
             Log::error('error creating user: ' . $e->getMessage());
