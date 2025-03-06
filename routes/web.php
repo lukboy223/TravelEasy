@@ -1,8 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
+// controllers
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+
+// custom middleware
+use App\Http\Middleware\checkEmployee;
+use App\Http\Middleware\checkAdmin;
 
 Route::get('/', function () {
     return view('homepagina/Home');
@@ -22,7 +28,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', checkAdmin::class])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
