@@ -17,14 +17,13 @@ return new class extends Migration
     drop table if exists Roles;
     Create table Roles(
     Id int unsigned not null auto_increment
-    ,User_id int unsigned
+    ,User_id int unsigned not null 
     ,Name varchar(50) not null
     ,Isactive bit not null default 1
     ,Note varchar(250) null default null
     ,Created_at datetime(6) not null default now(6)
     ,Updated_at datetime(6) not null default now(6)
     ,Primary Key (id)
-   
     )engine=innoDB;
     ');
     }
