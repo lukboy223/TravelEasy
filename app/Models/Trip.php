@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Trip extends Model
 {
@@ -11,26 +12,18 @@ class Trip extends Model
     use HasFactory;
 
     protected $fillable = [
-        // ID van de werknemer die de reis maakt
         'EmployeeId',
-        // ID van de vertrekplaats
         'DepartureId',
-         // ID van de bestemming
         'DestinationId',
-        // Vluchtnummer van de reis
         'FlightNumber',
-         // Datum van vertrek
         'DepartureDate',
-        // Tijd van vertrek
         'DepartureTime',
-        // Datum van aankomst
         'ArrivalDate',
-        // Tijd van aankomst
         'ArrivalTime',
-        // Status van de reis (bijv. gepland, onderweg, voltooid)
         'TravelStatus',
     ];
 
+    // Relaties
     public function employee()
     {
         return $this->belongsTo(Employee::class);
@@ -46,4 +39,14 @@ class Trip extends Model
         return $this->belongsTo(Destination::class);
     }
 
+    // Zorg ervoor dat de datums in het gewenste formaat worden weergegeven
+    public function getDepartureDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y'); // Formatteer als d-m-Y
+    }
+
+    public function getArrivalDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y'); // Formatteer als d-m-Y
+    }
 }

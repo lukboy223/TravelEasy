@@ -10,6 +10,9 @@ Route::get('/', function () {
 
 // Trip routes
 Route::get('/trips', [TripController::class, 'index'])->name('trips.index');
+// create trip
+Route::get('/trips/create', [TripController::class, 'create'])->name('trips.create');
+Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

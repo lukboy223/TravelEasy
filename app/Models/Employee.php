@@ -9,6 +9,7 @@ class Employee extends Model
 {
     /** @use HasFactory<\Database\Factories\EmployeeFactory> */
     use HasFactory;
+    
     public function person()
     {
         return $this->belongsTo(Person::class);

@@ -12,6 +12,14 @@
 
         <!-- Tabel met alle reizen -->
         <div class="overflow-x-auto mx-auto max-w-6xl">
+        <!-- Link om een nieuwe reis te creëren -->
+        <div class="justify-end mb-4">
+            <a href="{{ route('trips.create') }}" 
+            style="background-color: #001f3d;" 
+            class="text-white px-6 py-2 rounded font-semibold shadow-md transition">
+                Nieuwe reis toevoegen
+            </a>
+        </div>
             <table class="table-auto w-full bg-white border-collapse border border-gray-200 shadow-md">
                 <thead style="background-color: #001f3d;" class="text-white">
                     <tr>
