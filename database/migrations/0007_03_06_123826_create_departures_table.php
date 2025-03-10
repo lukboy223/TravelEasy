@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists Departure;
-        Create table Departure(
+        drop table if exists Departures;
+        Create table Departures(
         Id int unsigned not null auto_increment
         ,Country varchar(50) not null
         ,Airfield varchar(50) not null

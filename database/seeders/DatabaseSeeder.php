@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Booking;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -25,7 +26,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Administrator',
             'User_id' => 1,
         ]);
-
+        Booking::factory(100)->create();
+        
         Role::factory(100)->create();
     }
 }

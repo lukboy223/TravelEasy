@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,10 +12,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_destinations', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        DB::unprepared('
+        drop table if exists Destinations;
+        Create table Destinations(
+        Id int unsigned not null auto_increment
+        ,Country varchar(50) not null
+        ,Airfield varchar(50) not null
+        ,Isactive bit not null default 1
+        ,Note varchar(250) null default null
+        ,Created_at datetime(6) not null default now(6)
+        ,Updated_at datetime(6) not null default now(6)
+        ,Primary Key (id)
+       
+        )engine=innoDB;
+        ');
     }
 
     /**

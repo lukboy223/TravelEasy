@@ -3,11 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Person;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class PersonFactory extends Factory
+class CustomerFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +18,8 @@ class PersonFactory extends Factory
     public function definition(): array
     {
         return [
-            'firstName' => $this->faker->firstName(50),
-            'lastName' => $this->faker->lastName(50),
-            'birthDate' => $this->faker->date(),
+            'people_id' => Person::factory(),
+            'RelationNumber' => $this->faker->numberBetween(100000, 999999),
         ];
     }
 }
