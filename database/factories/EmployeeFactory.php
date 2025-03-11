@@ -19,8 +19,8 @@ class EmployeeFactory extends Factory
     public function definition(): array
     {
         return [
-            "peopleid" => Person::factory(),
-            "nummer" => $this->faker->nummer(255),
+            "people_id" => Person::factory(),
+            "nummer" => $this->faker->numberBetween(1, 1000),
             "medewerkertype" => $this->faker->randomElement(["Manager", "Beheerder", "Diskmedewerker"]),
         ];
     }

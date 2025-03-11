@@ -18,8 +18,8 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            "peopleid" => Person::factory(),
-            "relatienummer" => $this->faker->relatienummer(255),
+            "people_id" => Person::factory(),
+            "relatienummer" => $this->faker->word(),
         ];
     }
 }

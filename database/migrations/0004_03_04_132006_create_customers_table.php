@@ -16,14 +16,14 @@ return new class extends Migration
         DROP TABLE IF EXISTS customers;
         CREATE TABLE customers (
             id int UNSIGNED AUTO_INCREMENT
-            ,peopleid int UNSIGNED NOT NULL
+            ,people_id int UNSIGNED NOT NULL
             ,relatienummer VARCHAR(255) NOT NULL
             ,isactief bit DEFAULT TRUE
             ,opmerking VARCHAR(255) NULL
-            ,datumaangemaakt datetime(6) not null default now(6)
-            ,datumgewijzigd datetime(6) not null default now(6)
+            ,created_at datetime(6) not null default now(6)
+            ,updated_at datetime(6) not null default now(6)
             ,PRIMARY KEY (id)
-            ,FOREIGN KEY (peopleid) REFERENCES people(id)
+            ,FOREIGN KEY (people_id) REFERENCES people(id)
         )engine=InnoDB;
         ');
     }

@@ -16,8 +16,8 @@ return new class extends Migration
         DROP TABLE IF EXISTS messages;
         CREATE TABLE messages (
             id int UNSIGNED AUTO_INCREMENT
-            ,customerid int UNSIGNED NOT NULL
-            ,employeeid int UNSIGNED NOT NULL
+            ,customer_id int UNSIGNED NOT NULL
+            ,employee_id int UNSIGNED NOT NULL
             ,bericht varchar(255) NOT NULL
             ,verzonden_datum DATETIME NOT NULL
             ,isactief BIT DEFAULT TRUE
@@ -25,8 +25,8 @@ return new class extends Migration
             ,created_at datetime(6) not null default now(6)
             ,updated_at datetime(6) not null default now(6)
             ,PRIMARY KEY (id)
-            ,FOREIGN KEY (customerid) REFERENCES customers(id)
-            ,FOREIGN KEY (employeeid) REFERENCES employees(id)
+            ,FOREIGN KEY (customer_id) REFERENCES customers(id)
+            ,FOREIGN KEY (employee_id) REFERENCES employees(id)
         )engine=InnoDB;        
     ');
     }
