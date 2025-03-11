@@ -1274,13 +1274,12 @@
                     </div>
                     <div class="flex justify-between mt-6">
                         <div class="flex mx-auto">
-                            <input type="date" class="w-1/4 m-6 max-w-md px-2 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1E1358]" placeholder="Vertrekdatum">
-                            <input type="date" class="w-1/4 m-6 max-w-md px-2 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1E1358]" placeholder="Terugkeerdatum">
-                            <input type="text" class="w-1/4 m-6 max-w-md px-2 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1E1358]" placeholder="Van">
-                            <input type="text" class="w-1/4 m-6 max-w-md px-2 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1E1358]" placeholder="Naar">
+                            <input type="date" class="w-1/4 m-6 max-w-md px-2 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1E1358] text-black" placeholder="Vertrekdatum">
+                            <input type="date" class="w-1/4 m-6 max-w-md px-2 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1E1358] text-black" placeholder="Terugkeerdatum">
+                            <input type="text" class="w-1/4 m-6 max-w-md px-2 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1E1358] text-black" placeholder="Van">
+                            <input type="text" class="w-1/4 m-6 max-w-md px-2 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1E1358] text-black" placeholder="Naar">
                         </div>
                     </div>
-
                 </header>
             </div>
             <main class="mt-6 w-full">
