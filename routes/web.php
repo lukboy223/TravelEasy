@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ManagementController;
 use Illuminate\Support\Facades\Route;
 
 // controllers
@@ -32,6 +33,10 @@ Route::middleware(['auth', checkAdmin::class])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
+});
+
+Route::middleware(['auth', checkAdmin::class])->group(function () {
+   Route::get('/bookingPeriod', [ManagementController::class, 'BookingPeriod'])->name('management.Booking');
 });
 
 require __DIR__.'/auth.php';

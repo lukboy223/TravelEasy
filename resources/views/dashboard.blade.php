@@ -10,6 +10,13 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
+
+                    @if(Auth::user()->roles->contains('Name', 'Administrator'))
+                    <div class="mt-5">
+                        <a href="{{ route('management.Booking') }}"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Aantal boekingen per dag</a>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Administrator',
             'User_id' => 1,
         ]);
-        Booking::factory(100)->create();
+        Booking::factory(200)->create();
         
         Role::factory(100)->create();
     }
