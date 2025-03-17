@@ -94,14 +94,14 @@ class TripController extends Controller
         // Zet de datums om naar het juiste formaat voor opslag in de database (Y-m-d)
         try {
             // Controleer eerst of de datums correct zijn geformatteerd
-            dd($data['DepartureDate'], $data['ArrivalDate']); // Laat de data zien zoals ze zijn
+            // dd($data['DepartureDate'], $data['ArrivalDate']); // Laat de data zien zoals ze zijn
     
             // Zet de datums om naar het juiste formaat voor opslag
             $data['DepartureDate'] = Carbon::createFromFormat('d-m-Y', $data['DepartureDate'])->format('Y-m-d');
             $data['ArrivalDate'] = Carbon::createFromFormat('d-m-Y', $data['ArrivalDate'])->format('Y-m-d');
             
             // Gebruik dd() om de datums te controleren, voor het geval er iets misgaat
-            dd($data['DepartureDate'], $data['ArrivalDate']); // Dit toont de geformatteerde datums
+            // dd($data['DepartureDate'], $data['ArrivalDate']); // Dit toont de geformatteerde datums
             
             // Probeer de gegevens op te slaan
             Trip::create($data);
