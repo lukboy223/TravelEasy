@@ -25,24 +25,43 @@
             <th class="px-4 py-2 border border-gray-300">Verwijderen</th>
         </thead>
         <tbody>
-            @foreach($message as $message)
-            <td class="px-4 py-2 border border-gray-300"> $message ->UserName</td>
-            <td class="px-4 py-2 border border-gray-300"> $message ->UserName</td>
-            <td class="px-4 py-2 border border-gray-300"> $message ->messageverzendatum</td>
-            <td class="px-4 py-2 border border-gray-300"> $message ->messagevluchtnumber</td>
-            <td class="px-4 py-2 border border-gray-300"> $message ->message</td>
-            <td class="px-4 py-2 border border-gray-300">
-                <a href="{{ route('message.edit', $message->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Wijzigen</a>
-            </td>
-            <td class="px-4 py-2 border border-gray-300">
-                <form action="{{ route('message.destroy', $message->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Verwijderen</button>
-                </form>
-            </td>
+        @if($messages->isEmpty())
+                <tr class="bg-white dark:bg-gray-800">
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700 text-white bg-red-700 text-center" colspan="7">
+                        er is op dit moment een technische storing, probeer het later nog een keer.</td>
+                </tr>
+                @else
+            @foreach($messages as $message)
+                <tr>
+                    <td class="px-4 py-2 border border-gray-300"> {{$message ->customer_fullname}}</td>
+                    <td class="px-4 py-2 border border-gray-300"> {{$message ->employee_fullname}}</td>
+                    <td class="px-4 py-2 border border-gray-300"> {{$message ->messageverzendatum}}</td>
+                    <td class="px-4 py-2 border border-gray-300"> {{$message ->messagevluchtnumber}}</td>
+                    <td class="px-4 py-2 border border-gray-300"> {{$message ->message}}</td>
+                    <td class="px-4 py-2 border border-gray-300">
+                        <a href="{{ route('message.edit', $message->MessageID) }}" class="bg-green-600 hover:bg-green-400 text-white font-bold py-2 px-4 rounded">Wijzigen</a>
+                    </td>
+                    <td class="px-4 py-2 border border-gray-300">
+                        <form action="{{ route('message.destroy', $message->MessageID) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Verwijderen</button>
+                        </form>
+                    </td>
+                </tr>
             @endforeach
+            @endif
         </tbody>
     </table>
+    <div class="m-auto mt-5 mb-5 w-3/4">
+            {{-- pagination buttons --}}
+            {{$messages->links() }}
+        </div>
+        <div class="w-full justify-center flex my-6">
+            {{-- button to create a new message --}}
+            <a href="{{ route('message.create') }}"
+                class="bg-blue-700 text-white p-2 rounded hover:bg-blue-800 dark:hover:bg-blue-900">Nieuwe
+                bericht</a>
+        </div>
 </div>
     </x-app-layout>

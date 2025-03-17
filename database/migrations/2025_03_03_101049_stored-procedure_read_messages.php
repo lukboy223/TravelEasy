@@ -23,29 +23,27 @@ return new class extends Migration
             MSG.id as MessageID
             ,MSG.verzonden_datum as messageverzendatum
             ,MSG.bericht as message
-            ,CONCAT_WS(" ", CUS_PPL.firstname, CUS_PPL.infix, CUS_PPL.lastname) AS customer_fullname
-            ,CONCAT_WS(" ", EMP_PPL.firstname, EMP_PPL.infix, EMP_PPL.lastname) AS employee_fullname
+            ,CONCAT_WS(" ", PPL.firstname, PPL.infix, PPL.lastname) AS customer_fullname
+            ,CONCAT_WS(" ", PPL.firstname, PPL.infix, PPL.lastname) AS employee_fullname
             ,TRI.FlightNumber as messagevluchtnumber
+            
             FROM messages AS MSG
 
-            INNER JOIN customers AS CUS
-            ON MSG.Customer_id = CUS.id
+             INNER JOIN customers AS CUS
+					ON CUS.id = MSG.Customer_id 
 
-            INNER JOIN people AS CUS_PPL
-            ON CUS.people_id = CUS_PPL.id
+             INNER JOIN people AS PPL
+					ON PPL.id = CUS.people_id
 
-            INNER JOIN employees AS EMP
-            ON MSG.Employee_id = EMP.id
+             INNER JOIN employees AS EMP
+ 					ON EMP.id = MSG.employee_id
 
-            INNER JOIN People AS EMP_PPL
-            ON EMP.people_id = EMP_PPL.id
+             LEFT JOIN bookings AS BOOk
+ 					ON BOOK.Customer_id = CUS.id
 
-            INNER JOIN bookings AS BOOk
-            ON BOOK.Customer_id = MSG.id
+             LEFT JOIN trips AS TRI
+					ON TRI.Id = BOOK.trip_id
 
-            INNER JOIN trips AS TRI
-            ON TRI.Id = BOOK.Customer_id
-            
             LIMIT givLIMIT OFFSET givOFFSET;
         END;
         ');

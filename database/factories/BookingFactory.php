@@ -19,8 +19,8 @@ class BookingFactory extends Factory
     public function definition(): array
     {
         return [
-            'Customer_id' => Customer::factory(),
-            'trip_id' => Trip::factory(),
+            'Customer_id' => $this->faker->numberBetween(1, 100),
+            'trip_id' => $this->faker->numberBetween(1, 5),
             'seat_number' => $this->faker->numberBetween(0, 200),
             'Purchase_date' => $this->faker->date(),
             'Purchase_time' => $this->faker->time(),

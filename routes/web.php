@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BerichtController;
+use App\Http\Controllers\MessageController;
 
 Route::get('/', function () {
     return view('homepagina/Home');
@@ -29,14 +29,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
 });
 
-Route::get('/message', [BerichtController::class, 'index'])->name('message.index');
-Route::get('/message/create', [BerichtController::class, 'create']);
-Route::post('/message/store', [BerichtController::class, 'store']);
-Route::get('/message/{bericht}', [BerichtController::class, 'show']);
-Route::get('/message/{bericht}/edit', [BerichtController::class, 'edit']);
-Route::patch('/message/{bericht}', [BerichtController::class, 'update']);
-Route::delete('/message/{bericht}', [BerichtController::class, 'destroy']);
+route::middleware('auth')->group(function () {
+    Route::get('/message', [MessageController::class, 'index'])->name('message.index');
+    Route::get('/message/create', [MessageController::class, 'create'])->name('message.create');
+    Route::post('/message/store', [MessageController::class, 'store'])->name('message.store');
+    Route::get('/message/{bericht}', [MessageController::class, 'show']);
+    Route::get('/message/{bericht}/edit', [MessageController::class, 'edit'])->name('message.edit');
+    Route::patch('/message/{bericht}', [MessageController::class, 'update']);
+    Route::delete('/message/{bericht}', [MessageController::class, 'destroy'])->name('message.destroy');
+});
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

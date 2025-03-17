@@ -20,7 +20,7 @@ class TripFactory extends Factory
     public function definition(): array
     {
         return [
-            'Employee_id' => Employee::factory(),
+            'Employee_id' => $this->faker->numberBetween(1, 2),
             'Departure_Id' => Departure::factory(),
             'Destination_Id' => Destination::factory(),
             'FlightNumber' => $this->faker->numberBetween(100000, 999999),
