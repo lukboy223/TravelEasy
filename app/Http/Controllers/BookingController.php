@@ -16,11 +16,20 @@ class BookingController extends Controller
             // Fetch bookings using the stored procedure
             $bookings = collect(DB::select('call ReadBookings()'));
 
+            // Apply filters
+            if ($request->has('destination') && $request->destination != '') {
+                $bookings = $bookings->where('destination', $request->destination);
+            }
+
+            if ($request->has('purchase_date') && $request->purchase_date != '') {
+                $bookings = $bookings->where('purchase_date', $request->purchase_date);
+            }
+
             // Get current page form url e.g. &page=1
             $currentPage = LengthAwarePaginator::resolveCurrentPage();
 
             // Define how many items we want to be visible in each page
-            $perPage = 20;
+            $perPage = 10;
 
             // Slice the collection to get the items to display in current page
             $currentPageItems = $bookings->slice(($currentPage - 1) * $perPage, $perPage)->all();
@@ -36,6 +45,28 @@ class BookingController extends Controller
             Log::error('Error reading bookings: ' . $e->getMessage());
             return view('Booking.index', ['paginatedBookings' => []]);
         }
+    }
+
+    public function create()
+    {
+        return view('Booking.create');
+    }
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'relation_number' => 'required|integer',
+            'destination' => 'required|string|max:255',
+            'seat_number' => 'required|string|max:255',
+            'purchase_date' => 'required|date',
+            'purchase_time' => 'required|date_format:H:i',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+            'booking_status' => 'required|string|in:confirmed,pending,cancelled',
+        ]);
+
+        Booking::create($validatedData);
+
+        return redirect()->route('booking.index')->with('success', 'Booking created successfully.');
     }
 
     public function overzicht()

@@ -17,7 +17,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('booking.index')" :active="request()->routeIs('booking.index')">
-                        Boeking Overzicht
+                        Booking Overview
                     </x-nav-link>
                 </div>
             </div>

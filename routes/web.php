@@ -22,4 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/booking/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
 });
 
+Route::resource('booking', BookingController::class);
+
+
 require __DIR__.'/auth.php';
