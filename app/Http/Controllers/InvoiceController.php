@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 use App\Models\Invoice;
 use App\Models\Booking;
+use Carbon\Carbon;
+
 
 class InvoiceController extends Controller
 {
@@ -43,83 +46,88 @@ class InvoiceController extends Controller
 
             // Stuur de gebruiker terug met een foutmelding
             return redirect()->back()->with('error', 'Er is een probleem opgetreden bij het ophalen van facturen.');
+            // $invoices = [];
         }
 
         // Maak een paginatie-object aan met de opgehaalde facturen
-        $invoices = new LengthAwarePaginator($invoices, $total, $perPage, $page, [
+        $invoices = new LengthAwarePaginator(
+            $invoices,
+            $total,
+            $perPage,
+            $page,
+            [
             'path' => $request->url(),
             'query' => $request->query(),
-        ]);
+            ]
+        );
 
         // Retourneer de facturen aan de bijbehorende Blade-view
-        return view('invoices.index', compact('invoices'));
+        return view('invoices.index', ['invoices' => $invoices]);
     }
 
-    // CREATE
+    /**
+    * Show the form for creating a new invoices.
+    */
     public function create()
     {
-        // Haal de boeking op door de id
-        //$booking = Booking::findOrFail($bookingId);
+        // Haal de eerste beschikbare boeking op die nog geen factuur heeft
+        $booking = Booking::whereDoesntHave('invoice')->first();
     
-        // Stuur de boeking, bestemming en vertrek naar de view
-       // return view('invoice.create', compact('bookings'));
-        return view('invoices.create', ['bookingId' => Booking::all()]);
+        // Controleer of er een beschikbare boeking is
+        if (!$booking) {
+            return redirect()->back()->with('error', 'Er zijn geen boekingen beschikbaar om een factuur voor aan te maken.');
+        }
+    
+        return view('invoices.create', ['bookingId' => $booking->id]);
     }
     
-    
+    /**
+     * Store a newly created invoice in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
-        // Validatie van de invoer
+        $user = auth()->user();
+    
+        // Controleer of de gebruiker ingelogd is
+        if (!$user) {
+            return back()->withErrors(['EmployeeId' => 'Geen ingelogde gebruiker gevonden.']);
+        }
+    
+        // Valideer de invoer van de gebruiker
         $data = $request->validate([
-            'InvoiceNumber' => 'required|string|max:50|min:2',
-            'InvoiceDate' => 'required|date_format:Y-m-d',
-            'AmountExclVAT' => 'required|numeric|min:0',
-            'VAT' => 'required|numeric|min:0|max:100',
-            'AmountIncVAT' => 'required|numeric|min:0',
-            'InvoiceStatus' => 'required|string|min:2|max:50',
-            'Note' => 'nullable|string|max:255',
-            'IsActive' => 'nullable|boolean',
+            'InvoiceNumber' => 'required|unique:invoices',
+            'InvoiceDate' => 'required|date_format:d-m-Y',
+            'AmountExclVAT' => 'required|numeric',
+            'VAT' => 'required|numeric',
+            'AmountIncVAT' => 'required|numeric',
+            'InvoiceStatus' => 'required|string',
         ]);
+        
+        // Vul de ID's automatisch in
+        $data['EmployeeId'] = $user->id; // Bijv. de ingelogde gebruiker als EmployeeId
+        $data['BookingId'] = $request->input('BookingId');
     
-        // Haal de klant-id op (bijv. van de ingelogde gebruiker)
-        $customerId = auth()->user()->id; // Dit is afhankelijk van hoe je gebruikersbeheer hebt ingesteld
-    
-        // Zoek de laatste boeking van de klant
-        $booking = DB::table('bookings')
-                    ->where('customer_id', $customerId) // Als je een klant-id in je boekingentabel hebt
-                    ->latest() // Haal de laatste boeking
-                    ->first();
-    
-        // Als er geen boeking is voor deze klant, geef een foutmelding
-        if (!$booking) {
-            return redirect()->route('invoices.create')->with('error', 'Geen boeking gevonden voor deze klant.');
-        }
-    
-        // Haal de BookingId op
-        $BookingId = $booking->id;
-    
-        // Probeer de factuur in de database op te slaan
         try {
-            DB::table('invoices')->insert([
-                'InvoiceNumber' => $request->InvoiceNumber,
-                'InvoiceDate' => $request->InvoiceDate,
-                'AmountExclVAT' => $request->AmountExclVAT,
-                'VAT' => $request->VAT,
-                'AmountIncVAT' => $request->AmountIncVAT,
-                'InvoiceStatus' => $request->InvoiceStatus,
-                'BookingId' => $BookingId, // Vul automatisch de BookingId in
-                'Note' => $request->Note,
-                'IsActive' => $request->IsActive,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        } catch (\Exception $e) {
-            // Log de fout en geef een foutmelding terug naar de gebruiker
-            Log::error('Error creating invoice: ' . $e->getMessage());
-            return redirect()->route('invoices.create')->with('error', 'Er is iets fout gegaan, probeer het later opnieuw.');
-        }
+            // Zorg ervoor dat de datum goed geparsed wordt en in de juiste indeling wordt opgeslagen
+            $data['InvoiceDate'] = Carbon::createFromFormat('d-m-Y', $data['InvoiceDate'])->format('d-m-Y');
     
-        // Succesvolle insert, stuur de gebruiker terug naar de overzichtspagina
-        return redirect()->route('invoices.index')->with('success', 'Factuur is aangemaakt.');
+            // Maak de factuur aan
+            Invoice::create($data);
+    
+            // Redirect naar de indexpagina met een succesmelding
+            return redirect(route('invoices.index'))->with('success', 'De factuur is succesvol aangemaakt.');
+        } catch (\Exception $e) {
+            // Log de foutmelding voor debugging
+            Log::error('Fout bij het opslaan van de factuur: ' . $e->getMessage(), [
+                'data' => $data,
+                'exception' => $e,
+            ]);
+    
+            // Toon een foutmelding aan de gebruiker
+            return back()->withErrors(['error' => 'Fout bij het opslaan van de factuur: ' . $e->getMessage()]);
+        }
     }
 }
