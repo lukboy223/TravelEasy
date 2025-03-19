@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Customer;
+use App\Models\Trips;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -49,12 +51,16 @@ class BookingController extends Controller
 
     public function create()
     {
-        return view('Booking.create');
+        $customers = Customer::all();
+        $trips = Trips::all();
+        return view('Booking.create', compact('customers', 'trips'));
     }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'relation_number' => 'required|integer',
+            'customer_id' => 'required|exists:customers,id',
+            'trip_id' => 'required|exists:trips,id',
             'destination' => 'required|string|max:255',
             'seat_number' => 'required|string|max:255',
             'purchase_date' => 'required|date',
@@ -64,7 +70,17 @@ class BookingController extends Controller
             'booking_status' => 'required|string|in:confirmed,pending,cancelled',
         ]);
 
-        Booking::create($validatedData);
+        DB::statement('CALL InsertBooking(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            $validatedData['customer_id'],
+            $validatedData['trip_id'],
+            $validatedData['destination'],
+            $validatedData['seat_number'],
+            $validatedData['purchase_date'],
+            $validatedData['purchase_time'],
+            $validatedData['price'],
+            $validatedData['quantity'],
+            $validatedData['booking_status'],
+        ]);
 
         return redirect()->route('booking.index')->with('success', 'Booking created successfully.');
     }
@@ -85,9 +101,14 @@ class BookingController extends Controller
         return redirect()->route('booking.index');
     }
 
-    public function destroy(Booking $booking)
+    public function destroy($id)
     {
+        $booking = Booking::findOrFail($id);
         $booking->delete();
-        return redirect()->route('booking.index');
+    
+        return redirect()->route('booking.index')->with('success', 'The booking is successfully deleted');
     }
+
+    
 }
+

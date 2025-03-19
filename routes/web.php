@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/booking/{booking}/edit', [BookingController::class, 'edit'])->name('booking.edit');
     Route::patch('/booking/{booking}', [BookingController::class, 'update'])->name('booking.update');
     Route::delete('/booking/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
+    Route::get('/bookings/create', [BookingController::class, 'create'])->name('booking.create');
 });
 
 Route::resource('booking', BookingController::class);
