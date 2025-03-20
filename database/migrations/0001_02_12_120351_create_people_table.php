@@ -20,6 +20,7 @@ return new class extends Migration
             ,FirstName varchar(50) not null
             ,Infix varchar(10) null default null
             ,LastName varchar(50) not null
+            ,FullName varchar(110) as (concat_ws( " ", FirstName, Infix, LastName)) stored not null
             ,BirthDate date not null
             ,Isactive bit not null default 1
             ,Note varchar(250) null default null

@@ -33,6 +33,7 @@ route::middleware('auth')->group(function () {
     Route::get('/message', [MessageController::class, 'index'])->name('message.index');
     Route::get('/message/create', [MessageController::class, 'create'])->name('message.create');
     Route::post('/message/store', [MessageController::class, 'store'])->name('message.store');
+    Route::get('/message/send{id}', [MessageController::class, 'send'])->name('message.send');
     Route::get('/message/{bericht}', [MessageController::class, 'show']);
     Route::get('/message/{bericht}/edit', [MessageController::class, 'edit'])->name('message.edit');
     Route::patch('/message/{bericht}', [MessageController::class, 'update']);

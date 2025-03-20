@@ -61,23 +61,20 @@ class  MessageController extends Controller
     {   
         //validate the input
         $request->validate([
-            'customer_fullname' => 'required', 'string', 'max:110', 'min:4',
-            'employee_fullname' => 'required', 'string', 'max:110', 'min:4',
-            'messageverzendatum' => 'required', date('d-m-Y H:i:s'),
-            'messagevluchtnumber' => 'required', 'string', 'max:10', 'min:10',
+            'customer_fullname' => 'required', 'string', 'max:255', 'min:4',
+            'employee_number' => 'required', 'string', 'max:255', 'min:4',
+            'messagevluchtnumber' => 'required', 'string', 'max:6', 'min:6',
             'message' => 'required', 'string', 'max:255', 'min:4',
 
         ]);
 
         // try catch looks if the SP exists
         try{
-            DB::select('CALL SP_CreateMessage(?, ?, ?, ?, ?, ?)', [
-                $request->customer_id,
-                $request->employee_id,
-                $request->bericht,
-                $request->verzonden_datum,
-                $request->isactief,
-                $request->opmerking,
+            DB::select('CALL SP_CreateMessage(?, ?, ?, ?)', [
+                $request->customer_fullname,
+                $request->employee_number,
+                $request->messagevluchtnumber,
+                $request->message,
             ]);
         } catch (\Exception $e) {
             //logs the error in the log
@@ -86,6 +83,8 @@ class  MessageController extends Controller
 
         return redirect()->route('message.index');
     }
+
+
 
     /**
      * Display the specified resource.

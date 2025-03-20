@@ -20,7 +20,7 @@ class EmployeeFactory extends Factory
     {
         return [
             "people_id" => Person::factory(),
-            "nummer" => $this->faker->numberBetween(1, 1000),
+            "nummer" => $this->faker->numberBetween(1000, 9999),
             "medewerkertype" => $this->faker->randomElement(["Manager", "Beheerder", "Diskmedewerker"]),
         ];
     }

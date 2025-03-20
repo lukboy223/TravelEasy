@@ -22,10 +22,11 @@ return new class extends Migration
             SELECT 
             MSG.id as MessageID
             ,MSG.verzonden_datum as messageverzendatum
-            ,MSG.bericht as message
+            ,MSG.Message as message
             ,CONCAT_WS(" ", PPL.firstname, PPL.infix, PPL.lastname) AS customer_fullname
             ,CONCAT_WS(" ", PPL.firstname, PPL.infix, PPL.lastname) AS employee_fullname
             ,TRI.FlightNumber as messagevluchtnumber
+            ,MSG.isactief as messageisactief
             
             FROM messages AS MSG
 

@@ -19,7 +19,7 @@ class CustomerFactory extends Factory
     {
         return [
             "people_id" => Person::factory(),
-            "relatienummer" => $this->faker->word(),
+            "relatienummer" => $this->faker->numberBetween(1000, 9999),
         ];
     }
 }

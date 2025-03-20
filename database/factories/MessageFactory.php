@@ -21,7 +21,7 @@ class MessageFactory extends Factory
         return [
             "customer_id" => customer::factory(),
             "employee_id" => employee::factory(),
-            "bericht" => $this->faker->text(255),
+            "message" => $this->faker->text(255),
             "verzonden_datum" => $this->faker->date(),
         ];
     }

@@ -15,18 +15,28 @@ return new class extends Migration
         DB::unprepared('
         DROP PROCEDURE IF EXISTS SP_CreateMessage;
         CREATE PROCEDURE SP_CreateMessage(
-            IN p_customer_id INT,
-            IN p_employee_id INT,
+            IN p_customer_fullname VARCHAR(255),
+            IN p_employee_fullname VARCHAR(255),
             IN p_vluchtnummer VARCHAR(255),
             IN p_bericht VARCHAR(255)
         )
         BEGIN
-        declare Message_id INT;
+            DECLARE p_customer_id INT;
+            DECLARE p_employee_id INT;
+            DECLARE p_people_customer_id INT;
+            DECLARE p_people_employee_id INT;
+            DECLARE p_trip_id INT;
 
-            INSERT INTO messages (customer_id, employee_id, bericht, created_at)
-            VALUES (p_customer_id, p_employee_id, p_bericht now(6));
+            SELECT id INTO p_people_customer_id FROM People WHERE FullName = p_customer_fullname;
+            SELECT id INTO p_customer_id FROM customers WHERE people_id = p_people_customer_id;
+               
+            SELECT id INTO p_people_employee_id FROM People WHERE FullName = p_employee_fullname;
+            SELECT id INTO p_employee_id FROM employees WHERE people_id = p_people_employee_id;
 
-            SET Message_id = select trip_id from trips where vluchtnummer = p_vluchtnummer;
+            select id INTO p_trip_id from trips where FlightNumber = p_vluchtnummer;
+     
+            INSERT INTO messages (customer_id, employee_id, message, trip_id, verzonden_datum , created_at, updated_at)
+            VALUES (p_customer_id, p_employee_id, p_bericht, p_trip_id, now(6), now(6), now(6));
         END;
         ');
     }

@@ -18,7 +18,8 @@ return new class extends Migration
             id int UNSIGNED AUTO_INCREMENT
             ,customer_id int UNSIGNED NOT NULL
             ,employee_id int UNSIGNED NOT NULL
-            ,bericht varchar(255) NOT NULL
+            ,trip_id int UNSIGNED NULL
+            ,Message varchar(255) NOT NULL
             ,verzonden_datum DATETIME NOT NULL
             ,isactief BIT DEFAULT TRUE
             ,opmerking varchar(255) NULL
@@ -27,6 +28,7 @@ return new class extends Migration
             ,PRIMARY KEY (id)
             ,FOREIGN KEY (customer_id) REFERENCES customers(id)
             ,FOREIGN KEY (employee_id) REFERENCES employees(id)
+            ,FOREIGN KEY (trip_id) REFERENCES trips(id)
         )engine=InnoDB;        
     ');
     }
