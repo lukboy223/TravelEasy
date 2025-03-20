@@ -23,7 +23,7 @@ class CustomerController extends Controller
 
         // try catch looks if the SP exists
         try {
-            $customers = DB::select('call SP_GetPeople(?, ?)', [$perPage, $offset]);
+            $customers = DB::select('call SP_GetPeople(?, ?) ', [$perPage, $offset]);
         } catch (\Exception $e) {
             // logs the error in the log
             Log::error('error reading users: ' . $e->getMessage());
@@ -35,6 +35,7 @@ class CustomerController extends Controller
         $customers = new \Illuminate\Pagination\LengthAwarePaginator($customers, $total, $perPage, $page, [
             'path' => $request->url(),
             'query' => $request->query(),
+
         ]);
 
         // redirect the user to the index page with all the users
@@ -47,15 +48,18 @@ class CustomerController extends Controller
     }
     public function store(Request $request)
     {
+        
+
         $validatedData = $request->validate([
             'Firstname' => 'required|string|max:50|min:2|regex:/^[a-zA-Z]+$/',
             'Infix' => 'nullable|string|max:50|min:2|regex:/^[a-zA-Z]+$/',
             'Lastname' => 'required|string|max:50|min:2|regex:/^[a-zA-Z]+$/',
             'Birthdate' => 'required|date|before:today|after:1900-01-01', 
-            'RelationNumber' => 'required|string|max:50|min:2',
+            'Terms' => 'required|accepted'
         ]);
-        dd($validatedData);
         
+
+        // dd("Ik ben voor new person hier");
         // Insert data into the people table
         $person = new Person();
         $person->Firstname = $validatedData['Firstname'];
@@ -67,9 +71,15 @@ class CustomerController extends Controller
         // Associate the person record with the customers table
         $customer = new Customer();
         $customer->PeopleId = $person->id;
-        $customer->RelationNumber = $validatedData['RelationNumber'];
-        dd($customer);
+        // Generate a unique incremented number for RelationNumber
+       
+        $customer->RelationNumber = (string) ($person->id + 1000);
+        
+
         $customer->save();
+
+
+
     
         return redirect()->route('customers.index')->with('success', 'Klant succesvol toegevoegd.');
     }

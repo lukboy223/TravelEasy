@@ -19,7 +19,7 @@ class CustomerFactory extends Factory
     {
         return [
             'PeopleId' => Person::factory(),
-            'RelationNumber' => $this->faker->numberBetween(1, 100),
+            'RelationNumber' => $this->faker->numberBetween(1, 1000),
             'Isactive' => $this->faker->boolean,
             'Note' => $this->faker->text,
             'DateCreated' => $this->faker->dateTime,

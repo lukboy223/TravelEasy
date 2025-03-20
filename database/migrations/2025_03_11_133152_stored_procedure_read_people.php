@@ -33,6 +33,8 @@ BEGIN
 	INNER JOIN 	customers AS CUST
 			ON 	CUST.PeopleId = PPL.Id
             
+
+            order by PPL.Id DESC
             LIMIT givLIMIT OFFSET givOFFSET;
 END
         ');

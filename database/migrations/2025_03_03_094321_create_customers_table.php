@@ -16,7 +16,7 @@ return new class extends Migration
         Create table customers(
         Id int unsigned not null auto_increment
         ,PeopleId int unsigned
-        ,RelationNumber Varchar(50) not null
+        ,RelationNumber Varchar(50) not null    
         ,Isactive bit not null default 1
         ,Note varchar(250) null default null
         ,DateCreated datetime(6) not null default now(6)
