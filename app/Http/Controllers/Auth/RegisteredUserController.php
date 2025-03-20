@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+use function Laravel\Prompts\alert;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -56,15 +58,16 @@ class RegisteredUserController extends Controller
         try {
             DB::select('call CreateUser(?, ?, ?, ?, ?, ?, ?, ?)', [$request->FirstName, $Infix, $request->LastName, $request->BirthDate, $request->Email, $request->Username, $password, 'Gebruiker']);
             $user = User::where('email', $request->Email)->firstOrFail();
+            event(new Registered($user));
+
+            Auth::login($user);
+
+            return redirect(route('dashboard'));
         } catch (\Exception $e) {
             //logs the error in the log
             Log::error('error registering user: ' . $e->getMessage());
         }
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('dashboard'));
+        return redirect()->route('home')->with('error', 'Er is iets fout gegaan bij het registreren, probeer het later opnieuw.');
+           
     }
 }

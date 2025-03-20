@@ -22,6 +22,7 @@ return new class extends Migration
                 SELECT USR.name as Username, ROL.name as RoleName, USR.created_at FROM users as USR
                 inner join roles AS ROL
                 on USR.id = ROL.user_id
+                Order by USR.created_at DESC
                 LIMIT givLIMIT OFFSET givOFFSET;
                 END
                 ');

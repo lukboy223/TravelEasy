@@ -13,7 +13,7 @@ use App\Http\Middleware\checkAdmin;
 
 Route::get('/', function () {
     return view('homepagina/Home');
-});
+})->name('home');
 Route::get('/homefail', function () {
     return view('homepagina/unhappyhome');
 });
