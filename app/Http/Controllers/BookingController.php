@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Customer;
-use App\Models\Trips;
+use App\Models\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -43,16 +43,17 @@ class BookingController extends Controller
             $paginatedBookings->setPath($request->url());
 
             return view('Booking.index', compact('paginatedBookings'));
-        } catch (\Exception $e) {
-            Log::error('Error reading bookings: ' . $e->getMessage());
-            return view('Booking.index', ['paginatedBookings' => []]);
+        } catch (\Illuminate\Database\QueryException $e) {
+            Log::error('Database connection error: ' . $e->getMessage());
+            return view('Booking.index', ['paginatedBookings' => [], 'error' => 'No data to be shown']);
         }
     }
 
     public function create()
     {
         $customers = Customer::all();
-        $trips = Trips::all();
+        $trips = Trip::all();
+
         return view('Booking.create', compact('customers', 'trips'));
     }
 
@@ -60,7 +61,7 @@ class BookingController extends Controller
     {
         $validatedData = $request->validate([
             'customer_id' => 'required|exists:customers,id',
-            'trip_id' => 'required|exists:trips,id',
+            'trip_id' => 'required|exists:trip,id',
             'destination' => 'required|string|max:255',
             'seat_number' => 'required|string|max:255',
             'purchase_date' => 'required|date',
@@ -105,10 +106,7 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
         $booking->delete();
-    
+
         return redirect()->route('booking.index')->with('success', 'The booking is successfully deleted');
     }
-
-    
 }
-

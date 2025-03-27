@@ -16,9 +16,22 @@ return new class extends Migration
         DROP PROCEDURE IF EXISTS ReadBookings;
             CREATE PROCEDURE ReadBookings()
             BEGIN
-                SELECT bookings.*, customers.relation_number 
+                SELECT 
+                bookings.*
+                ,customers.relation_number 
+                ,DEST.country as destination
+                ,TRIP.FlightNumber
                 FROM bookings
-                INNER JOIN customers ON bookings.customer_id = customers.id;
+
+                INNER JOIN customers 
+                ON bookings.customer_id = customers.id
+
+                inner join Trips as TRIP
+                on bookings.trip_id = TRIP.id
+
+                inner join destinations as DEST
+                on TRIP.destination_id = DEST.id
+                ;
             END
         ');
     }

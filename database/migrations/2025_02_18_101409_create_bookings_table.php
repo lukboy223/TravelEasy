@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('customer_id'); // Klant_id
             $table->integer('trip_id'); // Reis_id
-            $table->string('destination'); // bestemming
+
             $table->string('seat_number'); // stoel_nummer
             $table->date('purchase_date'); // aankoopdatum
             $table->time('purchase_time'); // aankooptijd

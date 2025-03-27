@@ -13,24 +13,17 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists Trips;
-        Create table Trips(
+        drop table if exists Destinations;
+        Create table Destinations(
         Id int unsigned not null auto_increment
-        ,Employee_id int unsigned not null 
-        ,Departure_Id int unsigned not null 
-        ,Destination_Id int unsigned not null 
-        ,FlightNumber varchar(10) not null
-        ,Departure_date date not null 
-        ,Departure_time time not null 
-        ,ArrivalDate date not null
-        ,ArrivalTime time not null
-        ,TripStatus varchar(50) not null
+        ,Country varchar(50) not null
+        ,Airfield varchar(50) not null
         ,Isactive bit not null default 1
         ,Note varchar(250) null default null
         ,Created_at datetime(6) not null default now(6)
         ,Updated_at datetime(6) not null default now(6)
         ,Primary Key (id)
-              
+       
         )engine=innoDB;
         ');
     }
@@ -40,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trips');
+        Schema::dropIfExists('destination');
     }
 };

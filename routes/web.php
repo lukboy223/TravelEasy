@@ -26,4 +26,4 @@ Route::middleware('auth')->group(function () {
 Route::resource('booking', BookingController::class);
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

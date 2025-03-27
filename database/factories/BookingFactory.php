@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Booking;
 use App\Models\Customer;
+use App\Models\Trip;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BookingFactory extends Factory
@@ -14,8 +15,7 @@ class BookingFactory extends Factory
     {
         return [
             'customer_id' => Customer::factory(), // Klant_id
-            'trip_id' => $this->faker->randomNumber(), // Klant_id
-            'destination' => $this->faker->city, // bestemming
+            'trip_id' => Trip::factory(), // Klant_id
             'seat_number' => $this->faker->randomNumber(3), // stoel_nummer
             'purchase_date' => $this->faker->date, // aankoopdatum
             'purchase_time' => $this->faker->time, // aankooptijd

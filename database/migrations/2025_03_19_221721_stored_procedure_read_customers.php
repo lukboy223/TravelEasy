@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,10 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
+            drop procedure if exists InsertBooking;
             CREATE PROCEDURE InsertBooking(
                 IN customer_id INT,
                 IN trip_id INT,
-                IN destination VARCHAR(255),
                 IN seat_number VARCHAR(255),
                 IN purchase_date DATE,
                 IN purchase_time TIME,
@@ -36,7 +37,6 @@ return new class extends Migration
                     customer_id,
                     trip_id,
                     relation_number,
-                    destination,
                     seat_number,
                     purchase_date,
                     purchase_time,
@@ -49,7 +49,6 @@ return new class extends Migration
                     customer_id,
                     trip_id,
                     relation_number,
-                    destination,
                     seat_number,
                     purchase_date,
                     purchase_time,

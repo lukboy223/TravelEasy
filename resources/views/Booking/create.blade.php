@@ -16,9 +16,9 @@
             </div>
 
             <div class="mt-4">
-                <label for="destination" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Destination</label>
-                <input id="destination" class="block mt-1 w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm" type="text" name="destination" required />
-            </div>
+                <label for="FlightNumber" class="block text-sm font-medium text-gray-700 dark:text-gray-200">FlightNumber</label>
+                <input id="FlightNumber" class="block mt-1 w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm" type="text" name="FlightNumber" required />
+            </div>  
 
             <div class="mt-4">
                 <label for="seat_number" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Seat Number</label>
