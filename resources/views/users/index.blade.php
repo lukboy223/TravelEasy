@@ -62,7 +62,7 @@
                     </td>
                     <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700  border-r">{{ $user->created_at
                         }}</td>
-                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700 text-white border-r"><a href=""
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700 text-white border-r"><a href="{{ route('users.edit', $user->UserId) }}"
                             class="bg-green-700 p-1 rounded">Wijzigen</a></td>
                     <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700 text-white"><a href=""
                             class="bg-red-700 p-1 rounded">Verwijderen</a></td>

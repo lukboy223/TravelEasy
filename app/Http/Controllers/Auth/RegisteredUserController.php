@@ -35,12 +35,12 @@ class RegisteredUserController extends Controller
     {
         //validate the request
         $request->validate([
-            'FirstName' => ['required', 'string', 'max:50', 'min:2'],
-            'Infix' => ['nullable', 'string', 'max:10'],
-            'LastName' => ['required', 'string', 'max:50', 'min:2'],
+            'FirstName' => ['required', 'string', 'max:50', 'min:2', "regex:/^[a-zA-Z]+$/"],
+            'Infix' => ['nullable', 'string', 'max:10', "regex:/^[a-zA-Z]+$/"],
+            'LastName' => ['required', 'string', 'max:50', 'min:2', "regex:/^[a-zA-Z]+$/"],
             'BirthDate' => ['required', 'date', 'before:today', 'after:1900-01-01'],
             'Email' => ['required', 'email', 'unique:users,email'],
-            'Username' => ['required', 'string', 'min:2', 'max:50', 'unique:users,name'],
+            'Username' => ['required', 'string', 'min:2', 'max:50', 'unique:users,name', "regex:/^[a-zA-Z]+$/"],
             'Password' => ['required', 'min:8', 'max:255', Rules\Password::defaults()],
             'PasswordRepeat' => ['required', 'same:Password'],
         ]);
@@ -56,7 +56,7 @@ class RegisteredUserController extends Controller
 
         //try catch to create the user
         try {
-            DB::select('call CreateUser(?, ?, ?, ?, ?, ?, ?, ?)', [$request->FirstName, $Infix, $request->LastName, $request->BirthDate, $request->Email, $request->Username, $password, 'Gebruiker']);
+            DB::exec('call CreateUser(?, ?, ?, ?, ?, ?, ?, ?)', [$request->FirstName, $Infix, $request->LastName, $request->BirthDate, $request->Email, $request->Username, $password, 'Gebruiker']);
             $user = User::where('email', $request->Email)->firstOrFail();
             event(new Registered($user));
 
@@ -66,8 +66,8 @@ class RegisteredUserController extends Controller
         } catch (\Exception $e) {
             //logs the error in the log
             Log::error('error registering user: ' . $e->getMessage());
+            return redirect()->route('home')->with('error', 'Er is iets fout gegaan bij het registreren, probeer het later opnieuw.');
         }
-        return redirect()->route('home')->with('error', 'Er is iets fout gegaan bij het registreren, probeer het later opnieuw.');
            
     }
 }

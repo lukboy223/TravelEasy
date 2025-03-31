@@ -30,7 +30,9 @@ return new class extends Migration
         ,Created_at datetime(6) not null default now(6)
         ,Updated_at datetime(6) not null default now(6)
         ,Primary Key (id)
-              
+        ,Foreign Key (Employee_id) references Employees(id)
+        ,Foreign Key (Departure_Id) references departures(id)
+        ,Foreign Key (Destination_Id) references destinations(id)
         )engine=innoDB;
         ');
     }
