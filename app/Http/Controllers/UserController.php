@@ -135,4 +135,15 @@ class UserController extends Controller
         }
 
     }
+    public function destroy($userId){
+        try{
+            DB::select('call DeleteUser(?)', [$userId]);
+            return redirect()->route('users.index')->with('success', 'Gebruiker is verwijderd.');
+        } catch (\Exception $e) {
+            //logs the error in the log
+            Log::error('error deleting user: ' . $e->getMessage());
+            //redirects the user to the index page with an error message
+            return redirect()->route('users.index')->with('error', 'Er is iets fout gegaan, probeer het later opnieuw.');
+        }
+    }
 }
