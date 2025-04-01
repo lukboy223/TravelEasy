@@ -41,4 +41,37 @@ class ManagementController extends Controller
         return view('management.booking', ['Bookings' => $Bookings]);
    
     }
+
+    public function PopDestination(Request $request)
+    {
+        //makes variables for pagination
+
+        $perPage = 25;
+        $page = $request->input('page', 1);
+        $offset = ($page - 1) * $perPage;
+
+        $total = DB::table('users')->count();
+
+        // try catch looks if the SP exists
+        try{
+            $Trips = DB::select('call ReadPopularDestinations(?, ?)', [$perPage, $offset]);
+
+        } catch (\Exception $e) {
+            //logs the error in the log
+            Log::error('error reading popular destinations: ' . $e->getMessage());
+            //makes an empty array if the SP doesn't exist
+            $Trips = [];
+        }
+        
+        //paginate
+
+        $Trips = new LengthAwarePaginator($Trips, $total, $perPage, $page, [
+            'path' => $request->url(),
+            'query' => $request->query(),
+        ]);
+
+        //redirect the user to the index page with all the users
+        return view('management.popDestinations', ['Trips' => $Trips]);
+   
+    }
 }

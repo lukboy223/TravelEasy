@@ -16,6 +16,10 @@
                         <a href="{{ route('management.Booking') }}"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Aantal boekingen per dag</a>
                     </div>
+                    <div class="mt-5">
+                        <a href="{{ route('management.PopDestination') }}"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Populaire bestemmingen</a>
+                    </div>
                     @endif
                 </div>
             </div>

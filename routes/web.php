@@ -40,6 +40,7 @@ Route::middleware(['auth', checkAdmin::class])->group(function () {
 
 Route::middleware(['auth', checkAdmin::class])->group(function () {
    Route::get('/bookingPeriod', [ManagementController::class, 'BookingPeriod'])->name('management.Booking');
+   Route::get('/PopDestination', [ManagementController::class, 'PopDestination'])->name('management.PopDestination');
 });
 
 require __DIR__.'/auth.php';

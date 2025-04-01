@@ -17,7 +17,7 @@ class DestinationFactory extends Factory
     public function definition(): array
     {
         return [
-            'country' => $this->faker->word,
+            'country' => $this->faker->country,
             'airfield' => $this->faker->word,
         ];
     }
