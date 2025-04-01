@@ -20,10 +20,10 @@ return new class extends Migration
             BEGIN
                 SELECT 
                 count(*) as total
-                ,Purchase_date
-                from bookings
-                group by Purchase_date
-                order by Purchase_date
+                ,DATE_FORMAT(Book.Purchase_date, "%Y-%m") as Purchase_date
+                from bookings as Book
+                group by DATE_FORMAT(Book.Purchase_date, "%Y-%m")
+                order by DATE_FORMAT(Book.Purchase_date, "%Y-%m")
                 LIMIT givLIMIT OFFSET givOFFSET;
                 END
                 ');

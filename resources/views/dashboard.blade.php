@@ -14,11 +14,15 @@
                     @if(Auth::user()->roles->contains('Name', 'Administrator'))
                     <div class="mt-5">
                         <a href="{{ route('management.Booking') }}"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Aantal boekingen per dag</a>
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Aantal boekingen</a>
                     </div>
                     <div class="mt-5">
                         <a href="{{ route('management.PopDestination') }}"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Populaire bestemmingen</a>
+                    </div>
+                    <div class="mt-5">
+                        <a href="{{ route('management.ProfitPeriod') }}"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Winst per periode</a>
                     </div>
                     @endif
                 </div>

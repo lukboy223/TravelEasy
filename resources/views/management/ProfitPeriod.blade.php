@@ -4,7 +4,7 @@
     {{-- title on the top of the screen --}}
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Aantal boekingen
+            Winst per periode
         </h2>
     </x-slot>
 
@@ -28,13 +28,13 @@
                         Datum</th>
                     <th
                         class="px-4 py-2 border-b-2 border-gray-300 dark:border-gray-700 text-left leading-4 tracking-wider">
-                        Aantal boekingen</th>
+                        Omzet</th>
 
                 </tr>
             </thead>
             <tbody>
                 {{-- if statement that checks if the array is empty and gives an message to the user if it is--}}
-                @if($Bookings->isEmpty())
+                @if($Profits->isEmpty())
                 <tr class="bg-white dark:bg-gray-800">
                     <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700 text-white bg-red-700 text-center"
                         colspan="5">Geen
@@ -42,11 +42,11 @@
                 </tr>
                 @else
                 {{-- shows the data of the given array --}}
-                @foreach($Bookings as $Booking)
+                @foreach($Profits as $Profit)
                 <tr class="bg-white dark:bg-gray-800">
-                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700  border-r">{{ $Booking->Purchase_date }}
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700  border-r">{{ $Profit->PurchaseMonth }}
                     </td>
-                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700  border-r">{{ $Booking->total }}
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700  border-r">{{ $Profit->TotalProfit }}
                     </td>
                     @endforeach
                     @endif
@@ -54,7 +54,7 @@
         </table>
         <div class="m-auto mt-5 mb-5 w-3/4">
             {{-- pagination buttons --}}
-            {{$Bookings->links() }}
+            {{$Profits->links() }}
         </div>
     </div>
 
