@@ -25,7 +25,7 @@ class  MessageController extends Controller
 
         // try catch looks if the SP exists
         try{
-            $messages = DB::select('CALL ReadMessages(?, ?)', [$perPage, $offset]);
+            $messages = DB::select('CALL SP_ReadMessages(?, ?)', [$perPage, $offset]);
 
         } catch (\Exception $e) {
             //logs the error in the log
@@ -59,6 +59,7 @@ class  MessageController extends Controller
      */
     public function store(Request $request)
     {   
+        dd($request->all());
         //validate the input
         $request->validate([
             'customer_fullname' => 'required', 'string', 'max:255', 'min:4',

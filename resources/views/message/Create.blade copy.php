@@ -25,7 +25,8 @@
 
 
 
-           
+                    <label for="messagevluchtnumber">Vluchtnummer</label>
+                    @livewire('search-flightnumber-bericht')
 
 
                     @error('messagevluchtnumber')

@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        DROP PROCEDURE IF EXISTS ReadMessages;
-        CREATE PROCEDURE ReadMessages(
+        DROP PROCEDURE IF EXISTS SP_ReadMessages;
+        CREATE PROCEDURE SP_ReadMessages(
             IN givLIMIT int, 
             IN givOFFSET int
         )
@@ -23,8 +23,7 @@ return new class extends Migration
             MSG.id as MessageID
             ,MSG.verzonden_datum as messageverzendatum
             ,MSG.Message as message
-            ,CONCAT_WS(" ", PPL.firstname, PPL.infix, PPL.lastname) AS customer_fullname
-            ,CONCAT_WS(" ", PPL.firstname, PPL.infix, PPL.lastname) AS employee_fullname
+            ,PPL.FullName as customer_fullname
             ,TRI.FlightNumber as messagevluchtnumber
             ,MSG.isactief as messageisactief
             

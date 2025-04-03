@@ -1267,7 +1267,7 @@
                         <div class="relative flex flex-col items-center justify-center w-full h-40 bg-[#E7F3FC] dark:bg-zinc-900">
                             <div class="absolute inset-0 w-full h-full bg-gradient-to-b from-transparent  dark:via-zinc-900 dark:to-zinc-900"></div>
                             <div class="relative z-10 flex flex-col items-center justify-center w-full h-full">
-                                <h1 class="text-2xl font-semibold leading-5 text-center text-gray-700 dark:text-gray-300">Welcome to Travel Easy</h1>
+                                <h1 class="text-5xl font-semibold leading-5 text-center text-gray-700 dark:text-gray-300">Welcome to Travel Easy</h1>
                                 <p class="mt-2 text-sm leading-5 text-center text-gray-500 dark:text-gray-400"></p>
                             </div>
                         </div>

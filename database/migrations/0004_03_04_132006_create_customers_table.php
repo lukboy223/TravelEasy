@@ -17,7 +17,7 @@ return new class extends Migration
         CREATE TABLE customers (
             id int UNSIGNED AUTO_INCREMENT
             ,people_id int UNSIGNED NOT NULL
-            ,relatienummer VARCHAR(255) NOT NULL
+            ,relatienumber VARCHAR(255) NOT NULL
             ,isactief bit DEFAULT TRUE
             ,opmerking VARCHAR(255) NULL
             ,created_at datetime(6) not null default now(6)

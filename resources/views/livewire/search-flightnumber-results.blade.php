@@ -11,9 +11,10 @@
             </div>
         @endif
         @foreach($results as $result)
-            <div class="pt-2 text-black dark:text-white" wire:click="selectResult({{ $result->id }})">
-                {{$result->FullName}}
-            </div>
+        <div class="pt-2 text-black dark:text-white" wire:click="selectResult('{{ $result->Id }}')">
+            {{$result->flightnumber}} (ID: {{ $result->Id ?? 'Geen ID' }})
+        </div>
         @endforeach 
     </div>
+    <input type="hidden" id="flightId" name="flightId" value="{{ $selectedId }}">
 </div>
