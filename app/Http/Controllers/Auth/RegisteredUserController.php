@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
             'LastName' => ['required', 'string', 'max:50', 'min:2', "regex:/^[a-zA-Z]+$/"],
             'BirthDate' => ['required', 'date', 'before:today', 'after:1900-01-01'],
             'Email' => ['required', 'email', 'unique:users,email'],
-            'Username' => ['required', 'string', 'min:2', 'max:50', 'unique:users,name', "regex:/^[a-zA-Z]+$/"],
+            'Username' => ['required', 'string', 'min:2', 'max:50', 'unique:users,name', "regex:/^[a-zA-Z0-9]+$/"],
             'Password' => ['required', 'min:8', 'max:255', Rules\Password::defaults()],
             'PasswordRepeat' => ['required', 'same:Password'],
         ]);
@@ -56,7 +56,7 @@ class RegisteredUserController extends Controller
 
         //try catch to create the user
         try {
-            DB::exec('call CreateUser(?, ?, ?, ?, ?, ?, ?, ?)', [$request->FirstName, $Infix, $request->LastName, $request->BirthDate, $request->Email, $request->Username, $password, 'Gebruiker']);
+            DB::select('call CreateUser(?, ?, ?, ?, ?, ?, ?, ?)', [$request->FirstName, $Infix, $request->LastName, $request->BirthDate, $request->Email, $request->Username, $password, 'Gebruiker']);
             $user = User::where('email', $request->Email)->firstOrFail();
             event(new Registered($user));
 

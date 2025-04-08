@@ -37,16 +37,18 @@
                 @if($Profits->isEmpty())
                 <tr class="bg-white dark:bg-gray-800">
                     <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700 text-white bg-red-700 text-center"
-                        colspan="5">Geen
-                        resultaten gevonden, probeer het later opnieuw.</td>
+                        colspan="5">
+                        Geen omzet gevonden, probeer het later opnieuw.</td>
                 </tr>
                 @else
                 {{-- shows the data of the given array --}}
                 @foreach($Profits as $Profit)
                 <tr class="bg-white dark:bg-gray-800">
-                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700  border-r">{{ $Profit->PurchaseMonth }}
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700  border-r">{{
+                        $Profit->PurchaseMonth }}
                     </td>
-                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700  border-r">{{ $Profit->TotalProfit }}
+                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700  border-r">{{
+                        number_format($Profit->TotalProfit, 2, ',', '.') }}
                     </td>
                     @endforeach
                     @endif

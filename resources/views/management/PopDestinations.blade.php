@@ -38,7 +38,7 @@
                 <tr class="bg-white dark:bg-gray-800">
                     <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-700 text-white bg-red-700 text-center"
                         colspan="5">Geen
-                        resultaten gevonden, probeer het later opnieuw.</td>
+                        vluchten gevonden, probeer het later opnieuw.</td>
                 </tr>
                 @else
                 {{-- shows the data of the given array --}}

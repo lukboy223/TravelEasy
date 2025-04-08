@@ -64,7 +64,7 @@ class UserController extends Controller
             'LastName' => ['required', 'string', 'max:50', 'min:2', "regex:/^[a-zA-Z]+$/"],
             'BirthDate' => ['required', 'date', 'before:today', 'after:1900-01-01'],
             'Email' => ['required', 'email', 'unique:users,email'],
-            'Username' => ['required', 'string', 'min:2', 'max:50', 'unique:users,name', "regex:/^[a-zA-Z]+$/"],
+            'Username' => ['required', 'string', 'min:2', 'max:50', 'unique:users,name', "regex:/^[a-zA-Z0-9]+$/"],
             'Password' => ['required', 'min:8', 'max:255', Rules\Password::defaults()],
             'PasswordRepeat' => ['required', 'same:Password'],
             'Role' => ['required', 'string', 'in:Gebruiker,Administrator']
@@ -113,7 +113,7 @@ class UserController extends Controller
             'LastName' => ['required', 'string', 'max:50', 'min:2', "regex:/^[a-zA-Z]+$/"],
             'BirthDate' => ['required', 'date', 'before:today', 'after:1900-01-01'],
             'Email' => ['required', 'email', Rule::unique('users')->ignore($request->UserId)],
-            'Name' => ['required', 'string', 'min:2', 'max:50', Rule::unique('users')->ignore($request->UserId), "regex:/^[a-zA-Z]+$/"],
+            'Name' => ['required', 'string', 'min:2', 'max:50', Rule::unique('users')->ignore($request->UserId), "regex:/^[a-zA-Z0-9]+$/"],
             'Role' => ['required', 'string', 'in:Gebruiker,Administrator']
         ]);
         
@@ -143,7 +143,7 @@ class UserController extends Controller
             //logs the error in the log
             Log::error('error deleting user: ' . $e->getMessage());
             //redirects the user to the index page with an error message
-            return redirect()->route('users.index')->with('error', 'Er is iets fout gegaan, probeer het later opnieuw.');
+            return redirect()->route('users.index')->with('error', 'Er is iets fout gegaan met het verwijderen van de gebruiker, probeer het later opnieuw.');
         }
     }
 }
