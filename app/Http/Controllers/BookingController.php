@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+
 class BookingController extends Controller
 {
     public function index(Request $request)
@@ -51,18 +52,16 @@ class BookingController extends Controller
 
     public function create()
     {
-        $customers = Customer::all();
-        $trips = Trip::all();
 
-        return view('Booking.create', compact('customers', 'trips'));
+        return view('Booking.create');
     }
 
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
-            'customer_id' => 'required|exists:customers,id',
-            'trip_id' => 'required|exists:trip,id',
-            'destination' => 'required|string|max:255',
+            'CustmerId' => 'required|exists:customers,id',
+            'TripId' => 'required|exists:trips,id',
             'seat_number' => 'required|string|max:255',
             'purchase_date' => 'required|date',
             'purchase_time' => 'required|date_format:H:i',
@@ -70,20 +69,25 @@ class BookingController extends Controller
             'quantity' => 'required|integer',
             'booking_status' => 'required|string|in:confirmed,pending,cancelled',
         ]);
+        try {
 
-        DB::statement('CALL InsertBooking(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
-            $validatedData['customer_id'],
-            $validatedData['trip_id'],
-            $validatedData['destination'],
-            $validatedData['seat_number'],
-            $validatedData['purchase_date'],
-            $validatedData['purchase_time'],
-            $validatedData['price'],
-            $validatedData['quantity'],
-            $validatedData['booking_status'],
-        ]);
+            DB::statement('CALL CreateBooking(?, ?, ?, ?, ?, ?, ?, ?)', [
+                $validatedData['CustmerId'],
+                $validatedData['TripId'],
+                $validatedData['seat_number'],
+                $validatedData['purchase_date'],
+                $validatedData['purchase_time'],
+                $validatedData['price'],
+                $validatedData['quantity'],
+                $validatedData['booking_status'],
+            ]);
 
-        return redirect()->route('booking.index')->with('success', 'Booking created successfully.');
+
+            return redirect()->route('booking.index')->with('success', 'Booking created successfully.');
+        } catch (\Exception $e) {
+            Log::error('error creating the booking: ' . $e->getMessage());
+            return redirect()->route('booking.create')->with('error', 'Fout opgetreden bij het aanmaken van de nieuwe boeking');
+        }
     }
 
     public function overzicht()
@@ -91,15 +95,50 @@ class BookingController extends Controller
         return view('overzicht-booking');
     }
 
-    public function edit(Booking $booking)
-    {
-        return view('Booking.edit', compact('booking'));
-    }
 
-    public function update(Request $request, Booking $booking)
+    public function edit($id)
     {
-        $booking->update($request->all());
-        return redirect()->route('booking.index');
+        try {
+            $data = DB::select('CALL ReadBooking(?)', [$id]);
+            // dd($data);
+
+            return view('Booking.update', ['Booking' => $data]);
+        } catch (\Exception $e) {
+            Log::error('error editing the booking: ' . $e->getMessage());
+        }
+    }
+//validation
+    public function update($id, Request $request)
+    {
+        $validatedData = $request->validate([
+            'CustmerId' => 'required|exists:customers,id',
+            'TripId' => 'required|exists:trips,id',
+            'seat_number' => 'required|string|max:100',
+            'purchase_date' => 'required|date|before:today|after:2025-01-01',
+            'purchase_time' => 'required|date_format:H:i:s',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+            'booking_status' => 'required|string|in:confirmed,pending,cancelled',
+        ]);
+
+        try {
+            DB::statement('CALL UpdateBooking(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+                $id,
+                $validatedData['CustmerId'],
+                $validatedData['TripId'],
+                $validatedData['seat_number'],
+                $validatedData['purchase_date'],
+                $validatedData['purchase_time'],
+                $validatedData['price'],
+                $validatedData['quantity'],
+                $validatedData['booking_status'],
+            ]);
+
+            return redirect()->route('booking.index')->with('success', 'Booking updated successfully.');
+        } catch (\Exception $e) {
+            Log::error('error updating the booking: ' . $e->getMessage());
+            return redirect()->route('booking.edit', ['booking' => $id])->with('error', 'Fout opgetreden bij het wijzigen van de boeking');
+        }
     }
 
     public function destroy($id)

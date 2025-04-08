@@ -3,11 +3,79 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\Log;
+use App\Models\Customer as Search;
 
 class SearchCustomer extends Component
 {
+    #[Validate('required')]
+    public $searchText = '';
+    public $results = [];
+    public $selectedId = null; // This will hold the ID of the selected result
+
+
+    protected $listeners = ['resultSelected' => 'updateSearchBar'];
+
+
+
+    public function mount($id = null)
+    {
+        $customer = Search::find($id);
+
+        if ($customer) {
+            $this->selectedId = $customer->id;
+            $this->searchText = $customer->relation_number;
+        }
+    }
+
+    public function selectResult($id)
+    {
+
+        // Check if the ID is null or empty
+        if (is_null($id) || empty($id)) {
+            Log::error('ID is null or invalid');
+            throw new \Exception('ID is null or invalid');
+        } else {
+            // Find the result by ID and set the search text
+            $this->selectedId = $id;
+            $this->searchText = Search::find($id)->relation_number;
+            $this->reset('results');
+        }
+    }
+
+    public function updatedSearchText($value)
+    {
+        $this->reset('results');
+
+        $this->validate();
+
+        $searchTerm = "{$value}%";
+
+        $this->results = Search::where('relation_number', 'LIKE', $searchTerm)->get();
+    }
+
+    public function clearResults()
+    {
+        $this->reset('results', 'searchText');
+    }
+
+    public function updateSearchBar($result)
+    {
+
+
+        $this->searchText = $result['relation_number'];
+
+
+        // Voeg hier code toe om andere gegevens bij te werken
+    }
+
     public function render()
     {
-        return view('livewire.search-customer');
+        return view('livewire.search-customer', [
+            'results' => $this->results // Pass the results to the view,
+            ,
+            'searchText' => $this->searchText // Pass the search text to the view
+        ],);
     }
 }

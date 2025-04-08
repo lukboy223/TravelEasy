@@ -13,9 +13,9 @@
         </div>
     @endif
 
-    @if (isset($error))
+    @if (session('error'))
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-5 w-3/4 m-auto">
-            {{ $error }}
+            {{ session('error') }}
         </div>
     @endif
 

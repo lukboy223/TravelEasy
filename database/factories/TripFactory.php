@@ -30,3 +30,4 @@ class TripFactory extends Factory
         ];
     }
 }
+
